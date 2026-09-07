@@ -61,24 +61,77 @@
       return;
     }
 
+    var sections = [];
+    var currentSection = null;
+    var sectionByHeadingId = {};
+
     headings.forEach(function (heading) {
-      var item = document.createElement('li');
-      item.className = heading.tagName.toLowerCase() === 'h3' ? 'toc-depth-3' : 'toc-depth-2';
-      var link = document.createElement('a');
-      link.href = '#' + heading.id;
-      link.textContent = heading.textContent;
-      item.appendChild(link);
-      tocList.appendChild(item);
+      if (heading.tagName.toLowerCase() === 'h2') {
+        var sectionItem = document.createElement('li');
+        sectionItem.className = 'toc-section';
+        var sectionLink = document.createElement('a');
+        sectionLink.href = '#' + heading.id;
+        sectionLink.textContent = heading.textContent;
+        sectionLink.className = 'toc-section-link';
+        sectionItem.appendChild(sectionLink);
+
+        var subList = document.createElement('ul');
+        subList.className = 'toc-sublist';
+        subList.hidden = true;
+        sectionItem.appendChild(subList);
+        tocList.appendChild(sectionItem);
+
+        var section = {
+          heading: heading,
+          item: sectionItem,
+          link: sectionLink,
+          subList: subList,
+          children: []
+        };
+        currentSection = section;
+        sections.push(section);
+        sectionByHeadingId[heading.id] = section;
+        sectionLink.addEventListener('click', function () { activate(section, heading.id); });
+      } else if (currentSection) {
+        var parentSection = currentSection;
+        var childItem = document.createElement('li');
+        var childLink = document.createElement('a');
+        childLink.href = '#' + heading.id;
+        childLink.textContent = heading.textContent;
+        childLink.className = 'toc-sub-link';
+        childItem.appendChild(childLink);
+        parentSection.subList.appendChild(childItem);
+        parentSection.children.push({ heading: heading, link: childLink });
+        sectionByHeadingId[heading.id] = parentSection;
+        childLink.addEventListener('click', function () { activate(parentSection, heading.id); });
+      }
+    });
+
+    sections.forEach(function (section) {
+      if (!section.children.length) section.subList.hidden = true;
     });
     toc.hidden = false;
+
+    function activate(section, headingId) {
+      sections.forEach(function (item) {
+        var isActive = item === section;
+        item.item.classList.toggle('is-active', isActive);
+        item.link.classList.toggle('is-active', isActive);
+        item.subList.hidden = !isActive || !item.children.length;
+        item.children.forEach(function (child) {
+          child.link.classList.toggle('is-active', isActive && child.heading.id === headingId);
+        });
+      });
+    }
+
+    activate(sections[0], sections[0].heading.id);
 
     if ('IntersectionObserver' in window) {
       var observer = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
           if (!entry.isIntersecting) return;
-          tocList.querySelectorAll('a').forEach(function (link) {
-            link.classList.toggle('is-active', link.getAttribute('href') === '#' + entry.target.id);
-          });
+          var section = sectionByHeadingId[entry.target.id];
+          if (section) activate(section, entry.target.id);
         });
       }, { rootMargin: '-92px 0px -65% 0px', threshold: 0 });
       headings.forEach(function (heading) { observer.observe(heading); });
