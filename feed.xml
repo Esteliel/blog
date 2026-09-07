@@ -15,6 +15,9 @@ layout: null
     <id>{{ site.url }}{{ site.baseurl }}{{ post.id }}</id>
     <published>{{ post.date | date_to_xmlschema }}</published>
     <updated>{{ post.date | date_to_xmlschema }}</updated>
+    <author>
+      <name>{{ post.author | default: site.author | default: site.title | escape }}</name>
+    </author>
     <summary type="html">{{ post.excerpt | strip_html | strip_newlines | escape }}</summary>
     <content type="html">{{ post.content | escape }}</content>
   </entry>

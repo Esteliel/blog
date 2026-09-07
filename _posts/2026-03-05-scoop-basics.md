@@ -1,6 +1,6 @@
 ---
 title: "scoop使用"
-date: 2026-03-05 11:50:40
+date: 2026-03-05 11:50:40 +0800
 author: moea
 layout: post
 slug: scoop-basics

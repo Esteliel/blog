@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Windows 全新装机指南（Scoop 版）"
-date: 2026-03-05 00:54:44
+date: 2026-03-05 00:54:44 +0800
 author: moea
 slug: windows-setup-scoop
 description: "Windows 全新装机指南"
