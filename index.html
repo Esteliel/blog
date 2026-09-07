@@ -4,15 +4,18 @@ title: 博客
 description: 记录想法、学习与生活中的小发现。
 ---
 <header class="blog-hero">
+  <div class="blog-hero-copy">
   <p class="eyebrow">ESTELIEL / NOTES</p>
-  <h1>记录想法，也记录正在发生的生活。</h1>
+  <h1>记录想法，<br>也记录<span>正在发生的生活。</span></h1>
   <p class="intro-copy">一些学习笔记、工具折腾和日常观察。慢慢写，慢慢整理。</p>
   <a class="rss-link" href="{{ '/feed.xml' | relative_url }}">订阅 RSS <span aria-hidden="true">↗</span></a>
+  </div>
+  <div class="hero-art" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="orbit orbit-three"></div><span class="orbit-star">✦</span><span class="orbit-caption">THOUGHTS IN ORBIT</span></div>
 </header>
 
 <section class="post-list" data-post-list aria-label="文章列表">
   <div class="post-list-heading">
-    <p class="eyebrow">LATEST NOTES</p>
+    <h2 class="list-title">最近的记录 <span>LATEST NOTES</span></h2>
     <p class="post-count">{{ site.posts.size }} 篇文章 · <a href="{{ '/categories/' | relative_url }}">按分类浏览</a> · <a href="{{ '/tags/' | relative_url }}">按标签浏览</a></p>
   </div>
   {% for post in site.posts %}
