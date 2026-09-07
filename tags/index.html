@@ -1,0 +1,57 @@
+---
+layout: default
+title: 标签
+description: 按关键词浏览 Esteliel Blog 的文章。
+taxonomy: tag
+---
+<section class="taxonomy-panel taxonomy-panel-intro">
+  <header class="taxonomy-panel-heading">
+    <span class="taxonomy-icon" aria-hidden="true">◆</span>
+    <div>
+      <p class="eyebrow">ESTELIEL / TAGS</p>
+      <h1>文章标签</h1>
+    </div>
+  </header>
+  <p class="taxonomy-lead">用关键词串起不同文章里的相似兴趣。</p>
+  <nav class="taxonomy-nav" aria-label="文章标签">
+    <a class="taxonomy-filter is-active" href="{{ '/tags/' | relative_url }}" data-taxonomy-value="" aria-current="page">全部标签 <span>{{ site.posts.size }}</span></a>
+    {% for tag in site.tags %}
+      <a class="taxonomy-filter" href="{{ '/tags/' | relative_url }}?name={{ tag[0] | url_encode }}" data-taxonomy-value="{{ tag[0] | escape }}">#{{ tag[0] }} <span>{{ tag[1].size }}</span></a>
+    {% endfor %}
+  </nav>
+</section>
+
+<section class="taxonomy-panel taxonomy-cloud-panel" aria-labelledby="tag-cloud-title">
+  <div class="taxonomy-cloud-heading">
+    <p class="eyebrow">EXPLORE</p>
+    <h2 id="tag-cloud-title">标签云</h2>
+  </div>
+  <div class="taxonomy-cloud">
+    {% for tag in site.tags %}
+      <a class="cloud-tag{% if tag[1].size > 1 %} is-medium{% endif %}{% if tag[1].size > 3 %} is-large{% endif %}" href="{{ '/tags/' | relative_url }}?name={{ tag[0] | url_encode }}">{{ tag[0] }} <sup>{{ tag[1].size }}</sup></a>
+    {% endfor %}
+  </div>
+</section>
+
+<div class="taxonomy-status" data-taxonomy-summary aria-live="polite">全部标签 · {{ site.posts.size }} 篇文章</div>
+
+<section class="post-list taxonomy-post-list" aria-label="标签文章列表">
+  {% for post in site.posts %}
+    <article class="post-card" data-taxonomy-card data-taxonomy-values="{{ post.tags | join: '||' | escape }}">
+      <div class="post-card-date">{{ post.date | date: "%Y.%m.%d" }}</div>
+      <div class="post-card-body">
+        <h2><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
+        <p>{{ post.excerpt | strip_html | strip_newlines | truncate: 150 }}</p>
+        <div class="post-card-meta">
+          {% for category in post.categories %}<a class="taxonomy taxonomy-category" href="{{ '/categories/' | relative_url }}?name={{ category | url_encode }}">{{ category }}</a>{% endfor %}
+          {% for tag in post.tags %}<a class="taxonomy" href="{{ '/tags/' | relative_url }}?name={{ tag | url_encode }}">#{{ tag }}</a>{% endfor %}
+        </div>
+      </div>
+      <a class="post-card-arrow" href="{{ post.url | relative_url }}" aria-label="阅读：{{ post.title }}">→</a>
+    </article>
+  {% endfor %}
+  <div class="empty-state filter-empty" data-taxonomy-empty hidden>
+    <h2>没有找到匹配的文章</h2>
+    <p>换一个标签试试。</p>
+  </div>
+</section>

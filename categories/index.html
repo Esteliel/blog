@@ -1,0 +1,45 @@
+---
+layout: default
+title: 分类
+description: 按主题浏览 Esteliel Blog 的文章。
+taxonomy: category
+---
+<section class="taxonomy-panel taxonomy-panel-intro">
+  <header class="taxonomy-panel-heading">
+    <span class="taxonomy-icon" aria-hidden="true">▣</span>
+    <div>
+      <p class="eyebrow">ESTELIEL / CATEGORIES</p>
+      <h1>文章分类</h1>
+    </div>
+  </header>
+  <p class="taxonomy-lead">按主题整理文章，找到同一条思路上的笔记。</p>
+  <nav class="taxonomy-nav" aria-label="文章分类">
+    <a class="taxonomy-filter is-active" href="{{ '/categories/' | relative_url }}" data-taxonomy-value="" aria-current="page">全部分类 <span>{{ site.posts.size }}</span></a>
+    {% for category in site.categories %}
+      <a class="taxonomy-filter" href="{{ '/categories/' | relative_url }}?name={{ category[0] | url_encode }}" data-taxonomy-value="{{ category[0] | escape }}">{{ category[0] }} <span>{{ category[1].size }}</span></a>
+    {% endfor %}
+  </nav>
+</section>
+
+<div class="taxonomy-status" data-taxonomy-summary aria-live="polite">全部分类 · {{ site.posts.size }} 篇文章</div>
+
+<section class="post-list taxonomy-post-list" aria-label="分类文章列表">
+  {% for post in site.posts %}
+    <article class="post-card" data-taxonomy-card data-taxonomy-values="{{ post.categories | join: '||' | escape }}">
+      <div class="post-card-date">{{ post.date | date: "%Y.%m.%d" }}</div>
+      <div class="post-card-body">
+        <h2><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
+        <p>{{ post.excerpt | strip_html | strip_newlines | truncate: 150 }}</p>
+        <div class="post-card-meta">
+          {% for category in post.categories %}<a class="taxonomy taxonomy-category" href="{{ '/categories/' | relative_url }}?name={{ category | url_encode }}">{{ category }}</a>{% endfor %}
+          {% for tag in post.tags %}<a class="taxonomy" href="{{ '/tags/' | relative_url }}?name={{ tag | url_encode }}">#{{ tag }}</a>{% endfor %}
+        </div>
+      </div>
+      <a class="post-card-arrow" href="{{ post.url | relative_url }}" aria-label="阅读：{{ post.title }}">→</a>
+    </article>
+  {% endfor %}
+  <div class="empty-state filter-empty" data-taxonomy-empty hidden>
+    <h2>没有找到匹配的文章</h2>
+    <p>换一个分类试试。</p>
+  </div>
+</section>

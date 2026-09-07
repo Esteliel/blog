@@ -11,7 +11,7 @@ description: "scoop使用 # scoop安装应用"
 
 # 安装scoop
 打开Windows自带的powershell，输入如下命令自定义安装位置(D:\Scoop更改为你需要安装的目录)
-img: https://cdn.jsdelivr.net/gh/nudoo/nudoo.github.io@master/gallery/imgs/5.jpg
+![Scoop 安装示意图](https://cdn.jsdelivr.net/gh/nudoo/nudoo.github.io@master/gallery/imgs/5.jpg)
 ```bash
 $env:SCOOP='D:\Scoop'
 [Environment]::SetEnvironmentVariable('SCOOP', $env:SCOOP, 'User')

@@ -11,7 +11,7 @@ tags: [scoop, git]
 
 # Windows 全新装机指南（Scoop 版）
 
-img: https://cdn.jsdelivr.net/gh/nudoo/nudoo.github.io@master/gallery/imgs/9.jpg
+![Windows 装机示意图](https://cdn.jsdelivr.net/gh/nudoo/nudoo.github.io@master/gallery/imgs/9.jpg)
 
 > 目标：从零开始，搭建一套干净、可维护、可复现的 Windows 开发环境。
 
