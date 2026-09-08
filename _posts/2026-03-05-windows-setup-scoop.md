@@ -6,7 +6,7 @@ author: moea
 slug: windows-setup-scoop
 description: "Windows 全新装机指南"
 categories: [开发工具]
-tags: [scoop, git]
+tags: [scoop, git, clash]
 ---
 
 # Windows 全新装机指南（Scoop 版）
@@ -56,13 +56,13 @@ slmgr /ato
 ## 第二阶段：配置网络与代理
 > 保证后续能从 GitHub 等源顺畅拉取资源。
 
-### 1. 安装 v2rayN
-1. 下载 [v2rayN 最新 release](https://github.com/2dust/v2rayN/releases)，解压到任意目录。
-2. 运行 `v2rayN.exe` → 导入或订阅节点 → 点击 **启用系统代理**。
+### 1. 安装 Clash
+1. 下载 [Clash Verge Rev 最新 release](https://github.com/clash-verge-rev/clash-verge-rev/releases)，安装到任意目录。
+2. 运行 Clash Verge Rev → 导入或订阅节点 → 点击 **启用系统代理**。
 3. 验证：浏览器打开 <https://google.com>，能正常加载即成功。
 
 ### 2. 记录本地监听端口
-- 默认 `127.0.0.1:10808`（Trojan / V2Ray 常用），本文以 `10808` 为例，后续命令请按实际端口修改。
+- Clash 常见默认端口为 HTTP `127.0.0.1:7890`、SOCKS5 `127.0.0.1:7891`。本文后续 Scoop 使用 HTTP 端口 `7890`，如本地配置不同请按实际端口修改。
 
 ---
 
@@ -89,10 +89,10 @@ irm https://gitee.com/glsnames/scoop-installer/raw/master/bin/install.ps1 | iex
 ```
 
 ### 3. 配置代理（关键）
-安装完成后立即执行（端口与 v2rayN 保持一致）：
+安装完成后立即执行（端口与 Clash 的 HTTP 端口保持一致）：
 
 ```powershell
-scoop config proxy 127.0.0.1:10808
+scoop config proxy 127.0.0.1:7890
 ```
 
 ---
@@ -162,12 +162,12 @@ git config --global user.email "you@example.com"
 ```
 # 配置 Git 代理
 ```bash
-# socks5协议，v2ray默认监听10808端口
-$ git config –global http.proxy socks5://127.0.0.1:10808
-$ git config –global https.proxy socks5://127.0.0.1:10808
-# http协议，v2ray默认监听10809端口
-$ git config –global http.proxy http://127.0.0.1:10809
-$ git config –global https.proxy https://127.0.0.1:10809
+# socks5协议，Clash常见默认监听7891端口
+$ git config --global http.proxy socks5://127.0.0.1:7891
+$ git config --global https.proxy socks5://127.0.0.1:7891
+# http协议，Clash常见默认监听7890端口
+$ git config --global http.proxy http://127.0.0.1:7890
+$ git config --global https.proxy http://127.0.0.1:7890
 # 查看设置
 $ git config -l
 ```
@@ -186,12 +186,12 @@ $ git config -l
 ## 一键复盘（复制即用）
 
 ```powershell
-# 0. 装好系统 → 驱动 → v2rayN 代理通畅
+# 0. 装好系统 → 驱动 → Clash 代理通畅
 
 # 1. 安装 Scoop
 Set-ExecutionPolicy RemoteSigned -CurrentUser -Force
 irm get.scoop.sh | iex
-scoop config proxy 127.0.0.1:10808
+scoop config proxy 127.0.0.1:7890
 
 # 2. 加仓库 & 装软件
 scoop bucket add extras versions nerd-fonts
