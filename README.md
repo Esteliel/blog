@@ -2,6 +2,13 @@
 
 基于 Jekyll 的 Markdown 博客，部署到 GitHub Pages 的 `/blog/` 路径。
 
+## 公共视觉
+
+`assets/css/brand.css` 与主站、提示词仓库中的同名文件保持一致，统一配色、字体、
+品牌和全站导航；各仓库保留本地副本以支持独立部署。博客的文章、分类、标签和
+RSS 入口位于第二行。本站资源和链接使用 `relative_url`，跨站入口使用 `_config.yml`
+中的 `url` 作为主站域名，不能将博客的 `/blog` 前缀重复加到跨站地址上。
+
 ## 发布文章
 
 在 `_posts/` 下创建 `YYYY-MM-DD-slug.md` 文件：
