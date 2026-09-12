@@ -24,25 +24,15 @@
 </head>
 <body>
   <a class="skip-link" href="#main-content">跳转到正文</a>
-  <header class="esteliel-header esteliel-header--section" data-site-header>
+  <header class="esteliel-header blog-header" data-site-header>
     <div class="esteliel-header__inner">
       <a class="esteliel-brand" href="{{ site.url }}/" aria-label="Esteliel 首页"><span class="esteliel-brand__mark" aria-hidden="true">e.</span><span>Esteliel</span><span class="esteliel-brand__section">BLOG</span></a>
-      <nav class="esteliel-nav" aria-label="主导航">
-        <a href="{{ site.url }}/nav/">导航</a>
-        <a href="{{ '/' | relative_url }}" aria-current="page">博客</a>
-        <a href="{{ site.url }}/tools/">工具</a>
-        <a href="{{ site.url }}/prompts/" target="_blank" rel="noopener noreferrer" aria-label="提示词管理（在新标签页打开）">提示词</a>
-        <a href="{{ site.url }}/gallery/">相册</a>
-        <a href="{{ site.url }}/about/">关于</a>
+      <nav class="esteliel-subnav" aria-label="博客导航">
+        <a href="{{ '/' | relative_url }}"{% if page.url == '/' or page.layout == 'post' %} aria-current="page"{% endif %}>文章</a>
+        <a href="{{ '/categories/' | relative_url }}"{% if page.taxonomy == 'category' %} aria-current="page"{% endif %}>分类</a>
+        <a href="{{ '/tags/' | relative_url }}"{% if page.taxonomy == 'tag' %} aria-current="page"{% endif %}>标签</a>
+        <a href="{{ '/feed.xml' | relative_url }}">RSS</a>
       </nav>
-    </div>
-    <div class="esteliel-header__secondary">
-    <nav class="esteliel-subnav" aria-label="博客导航">
-      <a href="{{ '/' | relative_url }}"{% if page.url == '/' or page.layout == 'post' %} aria-current="page"{% endif %}>文章</a>
-      <a href="{{ '/categories/' | relative_url }}"{% if page.taxonomy == 'category' %} aria-current="page"{% endif %}>分类</a>
-      <a href="{{ '/tags/' | relative_url }}"{% if page.taxonomy == 'tag' %} aria-current="page"{% endif %}>标签</a>
-      <a href="{{ '/feed.xml' | relative_url }}">RSS</a>
-    </nav>
     </div>
   </header>
   <main id="main-content" tabindex="-1" class="site-content{% if page.home %} site-content--home{% endif %}">
